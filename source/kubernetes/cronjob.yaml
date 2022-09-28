@@ -1,0 +1,18 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: detect-old-iam
+spec:
+  schedule: "0 15 10 1 ?"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: detect-old-iam
+            image: enaska0/detect-old-iam:latest
+            imagePullPolicy: IfNotPresent
+            command:
+            - python3
+            - detect-old-accesskeys.py
+          restartPolicy: OnFailure
